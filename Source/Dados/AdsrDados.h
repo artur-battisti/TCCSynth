@@ -13,6 +13,7 @@
 
 class AdsrDados : public juce::ADSR
 {
+
 public:
 
     void alterarADSR(const float attack, const float decay, const float sustain, const float release);
@@ -20,5 +21,5 @@ public:
 private:
 
     juce::ADSR::Parameters adsrParams;
-    
+
 };

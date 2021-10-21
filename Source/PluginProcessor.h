@@ -56,6 +56,14 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+
+    // Minhas funções no PluginProcessor
+
+    void addVoicesToSynth(int numVoices);
+
+    //==============================================================================
+
     juce::AudioProcessorValueTreeState apvts;
 
 private:
@@ -63,11 +71,7 @@ private:
     juce::Synthesiser synth;
     FiltroDados filtro;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
+    int numVoices = 10;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TCCSynthAudioProcessor)
 };
-
-
-// CRIAR CLASSES FILHAS DO FILTROCOMPONENT : 
-//                                          HP
-//                                          LP

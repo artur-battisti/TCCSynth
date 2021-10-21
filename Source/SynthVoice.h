@@ -13,6 +13,7 @@
 #include "SynthSound.h"
 #include "Dados/AdsrDados.h"
 #include "Dados/OscDados.h"
+#include "Dados/GainDados.h"
 
 class SynthVoice : public juce::SynthesiserVoice
 {
@@ -27,6 +28,7 @@ public:
     void renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) override;
 
     OscDados& getOscillator() { return osc; }
+    GainDados& getGain() { return gain; }
 
 private:
 
@@ -35,7 +37,7 @@ private:
     
     OscDados osc;
     //juce::dsp::Oscillator<float> osc{ [](float x) {return x / juce::MathConstants<float>::pi; } };
-    juce::dsp::Gain<float> gain;
+    GainDados gain;
     bool estaPronto{ false };
 
     // return std::sin(x);                             Sine

@@ -14,8 +14,6 @@
 //==============================================================================
 FiltroComponent::FiltroComponent(juce::AudioProcessorValueTreeState& apvts)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
 
     // HIGH-PASS
     freqHPAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERHIGHPASSFREQ", freqHPSlider);
@@ -48,21 +46,13 @@ FiltroComponent::~FiltroComponent()
 
 void FiltroComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
+    
     g.fillAll(juce::Colour::fromRGB(80,60,120));
     //g.drawRect(getLocalBounds(),5);
 }
 
 void FiltroComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 
     const auto bounds = getLocalBounds().reduced(10);
     const auto padding = 10;

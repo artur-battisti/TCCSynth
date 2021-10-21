@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include <iostream>
+
 
 //==============================================================================
 TCCSynthAudioProcessor::TCCSynthAudioProcessor()
@@ -24,7 +24,7 @@ TCCSynthAudioProcessor::TCCSynthAudioProcessor()
 #endif
 {
     synth.addSound(new SynthSound());
-    synth.addVoice(new SynthVoice());
+    addVoicesToSynth(numVoices);
 }
 
 TCCSynthAudioProcessor::~TCCSynthAudioProcessor()
@@ -182,15 +182,18 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             auto& sustain = *apvts.getRawParameterValue("SUSTAIN");
             auto& release = *apvts.getRawParameterValue("RELEASE");
 
+            auto& gain = *apvts.getRawParameterValue("GAIN");
+
             auto& osc1WaveType = *apvts.getRawParameterValue("OSC1WAVETYPE");
             
 
-            auto& fmFrequency = *apvts.getRawParameterValue("FMFREQ");
-            auto& fmDepth = *apvts.getRawParameterValue("FMDEPTH");
+            //auto& fmFrequency = *apvts.getRawParameterValue("FMFREQ");
+            //auto& fmDepth = *apvts.getRawParameterValue("FMDEPTH");
 
             voice->getOscillator().setWaveType(osc1WaveType);
             //voice->getOscillator().setFmParams(fmDepth, fmFrequency);
             voice->alterar(attack.load(), decay.load(), sustain.load(), release.load());
+            voice->getGain().setGainLevel(gain);
             
         }
     }
@@ -204,9 +207,7 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     filtro.alterarParametros(freqHP, ressonanciaHP, freqLP, ressonanciaLP);
     filtro.process(buffer);
-
-    //filtroLP.alterarParametros(0, freqLP, ressonanciaLP);
-    //filtroLP.process(buffer);
+    
     
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
@@ -252,11 +253,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::createParameters()
 {
-    // Combox: switch osc
-    // Attack
-    // Decay
-    // Sustain
-    // Release
 
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
 
@@ -264,10 +260,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::crea
 
     parameters.push_back(std::make_unique<juce::AudioParameterChoice>
         ("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{"Sine","Square", "Saw"}, 1));
-
-    //parameters.push_back(std::make_unique<juce::AudioParameterChoice>
-    //    ("OSC2WAVETYPE", "Osc 2 Wave Type", juce::StringArray{ "Sine","Square", "Saw" }, 2));
-    
 
     // FM
     //parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", juce::NormalisableRange<float>{ 0.0f, 1000.0f }, 250.0f));
@@ -280,12 +272,24 @@ juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::crea
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", juce::NormalisableRange<float>{ 0.0f, 5.0f, 0.01f, 0.4f }, 0.1f));
 
     // Filtro
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>
-        ("FILTERHIGHPASSFREQ", "Filter HighPass", juce::NormalisableRange<float>{ 0.0f, 20000.0f, 1.0f, 0.3f }, 0.0f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERHIGHPASSFREQ", "Filter HighPass", juce::NormalisableRange<float>{ 0.0f, 20000.0f, 1.0f, 0.3f }, 0.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRESHP", "Filter Resonance HP", juce::NormalisableRange<float>{ 1.0f, 10.0f, 0.01f}, 1.0f));
 
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERLOWPASSFREQ", "Filter LowPass", juce::NormalisableRange<float>{ 0.0f, 20000.0f, 1.0f, 1.2f }, 20000.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRESLP", "Filter Resonance LP", juce::NormalisableRange<float>{ 1.0f, 10.0f, 0.01f}, 1.0f));
 
+    // Gain
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", juce::NormalisableRange<float>{ 0.01f, 1.0f, 0.01f }, 0.5f));
+
     return { parameters.begin(), parameters.end() };
+}
+
+// Minhas funções no PluginProcessor
+
+void TCCSynthAudioProcessor::addVoicesToSynth(int numVoices) {
+
+    for ( int voice= 0;  voice< numVoices; ++voice)
+    {
+        synth.addVoice(new SynthVoice());
+    }
 }

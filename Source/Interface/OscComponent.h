@@ -11,11 +11,11 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "AuxiliarComponent.h"
 
 //==============================================================================
-/*
-*/
-class OscComponent  : public juce::Component
+
+class OscComponent  : public AuxiliarComponent
 {
 public:
     OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String waveSelectId);
@@ -25,7 +25,9 @@ public:
     void resized() override;
 
 private:
+    
     juce::ComboBox oscWaveSelect;
+    juce::Label waveSelectLabel{"WaveSelect","Wave Select"};
 
     // Attachment é o meio de anexar o slider ao parâmetro
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscWaveSelectAttachment;

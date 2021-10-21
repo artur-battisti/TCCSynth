@@ -13,10 +13,10 @@
 #include "Interface/AdsrComponent.h"
 #include "Interface/OscComponent.h"
 #include "Interface/FiltroComponent.h"
+#include "Interface/GainComponent.h"
 
 //==============================================================================
-/**
-*/
+
 class TCCSynthAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
@@ -28,13 +28,12 @@ public:
     void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
 
     TCCSynthAudioProcessor& audioProcessor;
     OscComponent osc1;
     AdsrComponent adsr;
     FiltroComponent filtro;
+    GainComponent gain;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TCCSynthAudioProcessorEditor)
 };

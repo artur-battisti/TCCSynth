@@ -15,7 +15,8 @@ TCCSynthAudioProcessorEditor::TCCSynthAudioProcessorEditor(TCCSynthAudioProcesso
     audioProcessor(p),
     osc1 (audioProcessor.apvts, "OSC1WAVETYPE"),
     adsr(audioProcessor.apvts),
-    filtro(audioProcessor.apvts)
+    filtro(audioProcessor.apvts),
+    gain(audioProcessor.apvts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -24,6 +25,7 @@ TCCSynthAudioProcessorEditor::TCCSynthAudioProcessorEditor(TCCSynthAudioProcesso
     addAndMakeVisible(osc1);
     addAndMakeVisible(adsr);
     addAndMakeVisible(filtro);
+    addAndMakeVisible(gain);
     
 }
 
@@ -34,24 +36,18 @@ TCCSynthAudioProcessorEditor::~TCCSynthAudioProcessorEditor()
 //==============================================================================
 void TCCSynthAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(juce::Colours::darkslateblue);
-
-    //g.setColour (juce::Colours::white);
-    //g.setFont (15.0f);
-    //g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void TCCSynthAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
 
-    const auto padding = 10;
+    const auto padding = 18;
 
-    osc1.setBounds(getWidth() * 1 / 5, 10, 100, 30);
-    adsr.setBounds(getWidth() * 3/4 - padding*8, getHeight() * 1/3, getWidth() / 3, getHeight() * 3 / 5);
-    filtro.setBounds(getWidth() * 2 / 7, getHeight() * 1 / 3, getWidth() * 2 / 6, getHeight() * 3 / 5);
+    osc1.setBounds(padding, getHeight() * 1/3, getWidth() / 4, getHeight() * 6/10);
+    gain.setBounds(osc1.getX(), osc1.getBottom() - 200, getWidth() / 4, getHeight() * 4/10);
+    filtro.setBounds(osc1.getRight()+padding, getHeight() * 1 / 3, getWidth() /3, getHeight() * 6/10);
+    adsr.setBounds(filtro.getRight()+padding, getHeight() * 1 / 3, getWidth() /3, getHeight() * 6/10);
 
 }
 

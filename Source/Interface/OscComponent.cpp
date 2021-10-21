@@ -20,6 +20,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     juce::StringArray choices{ "Sine", "Saw", "Square" };
     oscWaveSelect.addItemList(choices, 1);
     addAndMakeVisible(oscWaveSelect);
+    setLabel(waveSelectLabel);
 
     oscWaveSelectAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, waveSelectId, oscWaveSelect);
 
@@ -31,21 +32,14 @@ OscComponent::~OscComponent()
 
 void OscComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll(juce::Colours::darkslateblue);
+    g.fillAll(juce::Colour::fromRGB(80, 60, 120));
 }
 
 void OscComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 
-    oscWaveSelect.setBounds(0, 0, 90, 20);
+    const auto padding = 10;
+    waveSelectLabel.setBounds(padding, padding, getWidth()/2, 20);
+    oscWaveSelect.setBounds(waveSelectLabel.getRight() + padding, padding, getWidth()/3, 20);
 
 }

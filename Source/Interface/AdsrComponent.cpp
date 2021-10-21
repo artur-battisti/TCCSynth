@@ -41,12 +41,6 @@ AdsrComponent::~AdsrComponent()
 
 void AdsrComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
 
     g.fillAll(juce::Colour::fromRGB(80, 60, 120));
     //g.drawRect(getLocalBounds());
@@ -55,8 +49,6 @@ void AdsrComponent::paint (juce::Graphics& g)
 
 void AdsrComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 
     const auto bounds = getLocalBounds().reduced(10);
     const auto padding = 10;
@@ -76,4 +68,3 @@ void AdsrComponent::resized()
     sustainLabel.setBounds(sustainSlider.getX(), sustainSlider.getY() + sustainSlider.getHeight(), sustainSlider.getWidth(), padding * 2);
     releaseLabel.setBounds(releaseSlider.getX(), releaseSlider.getY() + releaseSlider.getHeight(), releaseSlider.getWidth(), padding * 2);
 }
-

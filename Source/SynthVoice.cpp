@@ -50,7 +50,7 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     osc.prepareToPlay(spec);
     gain.prepare(spec);
 
-    gain.setGainLinear(0.03f);
+    gain.setGainLevel(0.03);
 
     estaPronto = true;
 
@@ -77,11 +77,15 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int s
 
     adsr.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
 
+
+    for (int sample = 0; sample < numSamples ; sample++)
+    {
+
+    }
     for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
     {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
 
-        if (! adsr.isActive())
-            clearCurrentNote();
+        
     }
 }
