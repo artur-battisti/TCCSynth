@@ -26,10 +26,12 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    void setPluginNameStyle(juce::Label& pluginName);
 
 private:
 
     TCCSynthAudioProcessor& audioProcessor;
+    juce::Label pluginName{"PluginName", "ABSynth"};
     OscComponent osc1;
     AdsrComponent adsr;
     FiltroComponent filtro;

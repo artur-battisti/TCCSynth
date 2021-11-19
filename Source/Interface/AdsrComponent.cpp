@@ -42,7 +42,7 @@ AdsrComponent::~AdsrComponent()
 void AdsrComponent::paint (juce::Graphics& g)
 {
 
-    g.fillAll(juce::Colour::fromRGB(80, 60, 120));
+    g.fillAll(juce::Colour::fromRGB(123, 104, 238));
     //g.drawRect(getLocalBounds());
 }
 
@@ -52,7 +52,6 @@ void AdsrComponent::resized()
 
     const auto bounds = getLocalBounds().reduced(10);
     const auto padding = 10;
-    const auto padding2 = padding * 2;
     const auto sliderWidth = bounds.getWidth() / 4- padding;
     const auto sliderHeight = bounds.getHeight();
     const auto sliderStartX = padding;

@@ -24,7 +24,6 @@ TCCSynthAudioProcessor::TCCSynthAudioProcessor()
 #endif
 {
     synth.addSound(new SynthSound());
-    addVoicesToSynth(numVoices);
 }
 
 TCCSynthAudioProcessor::~TCCSynthAudioProcessor()
@@ -101,6 +100,9 @@ void TCCSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     // initialisation that you need..
 
     synth.setCurrentPlaybackSampleRate(sampleRate);
+    auto& choiceVoices = *apvts.getRawParameterValue("NUMVOICES");
+    changeNumVoices(choiceVoices);
+    addVoicesToSynth();
 
     for (int i = 0; i < synth.getNumVoices(); i++)
     {
@@ -111,12 +113,14 @@ void TCCSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     }
 
     filtro.prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    
 }
 
 void TCCSynthAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+    
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -148,7 +152,7 @@ bool TCCSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 
 void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-
+   
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -176,6 +180,8 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             // OSC control
             // ADSR
             // LFO
+            
+            auto& osc1WaveType = *apvts.getRawParameterValue("OSC1WAVETYPE");
 
             auto& attack = *apvts.getRawParameterValue("ATTACK");
             auto& decay = *apvts.getRawParameterValue("DECAY");
@@ -184,19 +190,17 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             auto& gain = *apvts.getRawParameterValue("GAIN");
 
-            auto& osc1WaveType = *apvts.getRawParameterValue("OSC1WAVETYPE");
-            
-
-            //auto& fmFrequency = *apvts.getRawParameterValue("FMFREQ");
-            //auto& fmDepth = *apvts.getRawParameterValue("FMDEPTH");
+            //==============================================================================
 
             voice->getOscillator().setWaveType(osc1WaveType);
-            //voice->getOscillator().setFmParams(fmDepth, fmFrequency);
             voice->alterar(attack.load(), decay.load(), sustain.load(), release.load());
             voice->getGain().setGainLevel(gain);
             
         }
+
+
     }
+
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
     auto& freqHP = *apvts.getRawParameterValue("FILTERHIGHPASSFREQ");
@@ -207,14 +211,12 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     filtro.alterarParametros(freqHP, ressonanciaHP, freqLP, ressonanciaLP);
     filtro.process(buffer);
-    
-    
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-
         // ..do something to the data...
+        
     }
 
 }
@@ -253,13 +255,17 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::createParameters()
 {
+    
 
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
 
-    // Select oscillator
-
+    // Oscillator
     parameters.push_back(std::make_unique<juce::AudioParameterChoice>
         ("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{"Sine","Square", "Saw"}, 1));
+
+    // Voices
+    parameters.push_back(std::make_unique<juce::AudioParameterChoice>
+        ("NUMVOICES", "Num Voices", juce::StringArray{ "Monophonic","Poliphonic"}, 1));
 
     // FM
     //parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", juce::NormalisableRange<float>{ 0.0f, 1000.0f }, 250.0f));
@@ -279,17 +285,33 @@ juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::crea
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRESLP", "Filter Resonance LP", juce::NormalisableRange<float>{ 1.0f, 10.0f, 0.01f}, 1.0f));
 
     // Gain
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", juce::NormalisableRange<float>{ 0.01f, 1.0f, 0.01f }, 0.5f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", juce::NormalisableRange<float>{ -96.0f, 0.0f, 0.1f }, 0.0f));
 
     return { parameters.begin(), parameters.end() };
 }
 
 // Minhas funções no PluginProcessor
 
-void TCCSynthAudioProcessor::addVoicesToSynth(int numVoices) {
-
+void TCCSynthAudioProcessor::addVoicesToSynth()
+{
+    synth.clearVoices();
     for ( int voice= 0;  voice< numVoices; ++voice)
     {
         synth.addVoice(new SynthVoice());
+    }
+}
+
+void TCCSynthAudioProcessor::changeNumVoices(int choice)
+{
+    synth.clearVoices();
+    switch (choice)
+    {
+    case 0:
+        numVoices = 1;
+        break;
+
+    case 1:
+        numVoices = 10;
+        break;
     }
 }

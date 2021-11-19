@@ -30,8 +30,8 @@ protected:
 
     void setVerticalSliderParams(juce::Slider& slider);
     void setRotarySliderParams(juce::Slider& slider);
+    void setComboBoxParams(juce::ComboBox& comboBox);
     void setLabel(juce::Label& label);
 
-    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AuxiliarComponent)
 };

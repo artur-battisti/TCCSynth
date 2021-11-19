@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="Z7U3x2" name="TCCSynth" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="Artur Battisti" pluginFormats="buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              companyName="Artur Battisti" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginVSTCategory="kPlugCategSynth">
   <MAINGROUP id="UeRiQH" name="TCCSynth">
     <GROUP id="{D1C32CCF-AF4F-2E5C-51C8-327A72BF901C}" name="Source">
@@ -17,6 +18,9 @@
       <FILE id="WId1Te" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="UltbOS" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <GROUP id="{F21C1B15-A9F9-27B0-D74D-0D7C7EAB3EF0}" name="Interface">
+        <FILE id="v4BK0w" name="GainComponent.cpp" compile="1" resource="0"
+              file="Source/Interface/GainComponent.cpp"/>
+        <FILE id="Hujs6Y" name="GainComponent.h" compile="0" resource="0" file="Source/Interface/GainComponent.h"/>
         <FILE id="pVs0AP" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/Interface/AdsrComponent.cpp"/>
         <FILE id="qJwDzo" name="AdsrComponent.h" compile="0" resource="0" file="Source/Interface/AdsrComponent.h"/>
@@ -37,6 +41,8 @@
         <FILE id="M27Dig" name="AdsrDados.h" compile="0" resource="0" file="Source/Dados/AdsrDados.h"/>
         <FILE id="tDLh2Y" name="FiltroDados.cpp" compile="1" resource="0" file="Source/Dados/FiltroDados.cpp"/>
         <FILE id="kmTbof" name="FiltroDados.h" compile="0" resource="0" file="Source/Dados/FiltroDados.h"/>
+        <FILE id="Y5Ppca" name="GainDados.cpp" compile="1" resource="0" file="Source/Dados/GainDados.cpp"/>
+        <FILE id="ejziCn" name="GainDados.h" compile="0" resource="0" file="Source/Dados/GainDados.h"/>
         <FILE id="trBLFD" name="OscDados.cpp" compile="1" resource="0" file="Source/Dados/OscDados.cpp"/>
         <FILE id="rFb0bT" name="OscDados.h" compile="0" resource="0" file="Source/Dados/OscDados.h"/>
       </GROUP>
@@ -46,8 +52,8 @@
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="TCCSynth"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="TCCSynth"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ABSynth"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ABSynth"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>

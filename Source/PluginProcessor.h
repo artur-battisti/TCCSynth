@@ -14,8 +14,7 @@
 #include "Dados/FiltroDados.h"
 
 //==============================================================================
-/**
-*/
+
 class TCCSynthAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -60,18 +59,19 @@ public:
 
     // Minhas funções no PluginProcessor
 
-    void addVoicesToSynth(int numVoices);
+    void addVoicesToSynth();
+    void changeNumVoices(int choice);
 
     //==============================================================================
 
     juce::AudioProcessorValueTreeState apvts;
-
+    
 private:
 
     juce::Synthesiser synth;
     FiltroDados filtro;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
-    int numVoices = 10;
+    int numVoices;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TCCSynthAudioProcessor)
 };

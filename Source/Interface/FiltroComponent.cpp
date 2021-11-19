@@ -47,7 +47,7 @@ FiltroComponent::~FiltroComponent()
 void FiltroComponent::paint (juce::Graphics& g)
 {
     
-    g.fillAll(juce::Colour::fromRGB(80,60,120));
+    g.fillAll(juce::Colour::fromRGB(123, 104, 238));
     //g.drawRect(getLocalBounds(),5);
 }
 
@@ -68,7 +68,7 @@ void FiltroComponent::resized()
     freqHPSlider.setBounds(sliderStartX, highPassLabel.getBottom() + padding2, sliderWidth, sliderHeight);
     freqHPLabel.setBounds(freqHPSlider.getX(), freqHPSlider.getY() + freqHPSlider.getHeight(), freqHPSlider.getWidth(), padding2);
 
-    resHPSlider.setBounds(sliderStartX, freqHPLabel.getBottom() + padding, sliderWidth, sliderHeight);
+    resHPSlider.setBounds(sliderStartX, freqHPLabel.getBottom() + padding*2, sliderWidth, sliderHeight);
     resHPLabel.setBounds(resHPSlider.getX(), resHPSlider.getY() + resHPSlider.getHeight(), resHPSlider.getWidth(), padding2);
 
     /*----------------------------------------------------------------------------------------------------------------------------*/
@@ -79,6 +79,6 @@ void FiltroComponent::resized()
     freqLPSlider.setBounds(freqHPSlider.getRight()+padding2, lowPassLabel.getBottom() + padding2, sliderWidth, sliderHeight);
     freqLPLabel.setBounds(freqLPSlider.getX(), freqLPSlider.getY() + freqLPSlider.getHeight(), freqLPSlider.getWidth(), padding2);
 
-    resLPSlider.setBounds(resHPSlider.getRight()+padding2, freqHPLabel.getBottom() + padding, sliderWidth, sliderHeight);
+    resLPSlider.setBounds(resHPSlider.getRight()+padding2, freqHPLabel.getBottom() + padding*2, sliderWidth, sliderHeight);
     resLPLabel.setBounds(resLPSlider.getX(), resLPSlider.getY() + resLPSlider.getHeight(), resLPSlider.getWidth(), padding2);
 }

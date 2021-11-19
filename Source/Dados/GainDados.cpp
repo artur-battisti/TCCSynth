@@ -17,7 +17,7 @@ void GainDados::prepare(const juce::dsp::ProcessSpec& spec)
 
 void GainDados::setGainLevel(const float newGain)
 {
-    gain.setGainLinear(newGain);
+    gain.setGainDecibels(newGain);
 }
 
 void GainDados::process(juce::dsp::ProcessContextReplacing<float>(audioBlock))

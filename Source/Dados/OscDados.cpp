@@ -25,7 +25,6 @@ void OscDados::getNextAudioBlock(juce::dsp::AudioBlock<float>& block)
 		
 		for (int sample = 0; sample < block.getNumSamples(); sample++)
 		{
-			fmMod = fmOsc.processSample(block.getSample(channel, sample) * fmDepth);
 		}
 	}
 
@@ -35,7 +34,7 @@ void OscDados::getNextAudioBlock(juce::dsp::AudioBlock<float>& block)
 
 void OscDados::setWaveFreq(const int midiNoteNumber)
 {
-	setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber) + fmMod);
+	setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
 	lastMidiNote = midiNoteNumber;
 }
 

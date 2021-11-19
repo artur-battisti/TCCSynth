@@ -27,17 +27,18 @@ GainComponent::~GainComponent()
 
 void GainComponent::paint (juce::Graphics& g)
 {
-
+    g.fillAll(juce::Colour::fromRGB(123, 104, 238));
 }
 
 void GainComponent::resized()
 {
     const auto bounds = getLocalBounds().reduced(10);
     const auto padding = 10;
-    const auto sliderWidth = bounds.getWidth() * 3/5;
-    const auto sliderHeight = bounds.getWidth() * 3/5;
+    const auto sliderWidth = bounds.getWidth() * 8/10;
+    const auto sliderHeight = bounds.getWidth() * 8/10;
 
-    gainLabel.setBounds(bounds.getWidth()/2 - bounds.getWidth()/4, padding, getWidth()/2, 20);
-    gainSlider.setBounds(gainLabel.getX(), gainLabel.getBottom(), sliderWidth, sliderHeight);
+    gainSlider.setBounds(bounds.getWidth()/2 - bounds.getWidth()/3, padding*2, sliderWidth, sliderHeight);
+    gainLabel.setBounds(gainSlider.getX()+padding*2, gainSlider.getBottom()+padding, getWidth()/2, 20);
+    
     
 }

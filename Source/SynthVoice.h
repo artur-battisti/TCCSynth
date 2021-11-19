@@ -26,10 +26,11 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void alterar(const float attack, const float decay, const float sustain, const float release);
     void renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples) override;
+    void setCurrentPlaybackSampleRate(const double newRate) override;
 
     OscDados& getOscillator() { return osc; }
     GainDados& getGain() { return gain; }
-
+    double currentSampleRate;
 private:
 
     AdsrDados adsr;
@@ -39,6 +40,7 @@ private:
     //juce::dsp::Oscillator<float> osc{ [](float x) {return x / juce::MathConstants<float>::pi; } };
     GainDados gain;
     bool estaPronto{ false };
+    
 
     // return std::sin(x);                             Sine
     // return x / juce::MathConstants<float>::pi;      Saw

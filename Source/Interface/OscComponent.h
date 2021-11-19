@@ -18,7 +18,7 @@
 class OscComponent  : public AuxiliarComponent
 {
 public:
-    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String waveSelectId);
+    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String waveSelectId, juce::String voiceSelectId);
     ~OscComponent() override;
 
     void paint (juce::Graphics&) override;
