@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Z7U3x2" name="TCCSynth" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="Z7U3x2" name="ABSynth" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="Artur Battisti" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
+              companyName="Artur Battisti" pluginFormats="buildStandalone,buildVST3"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginVSTCategory="kPlugCategSynth">
-  <MAINGROUP id="UeRiQH" name="TCCSynth">
+  <MAINGROUP id="UeRiQH" name="ABSynth">
     <GROUP id="{D1C32CCF-AF4F-2E5C-51C8-327A72BF901C}" name="Source">
       <FILE id="DMCHMt" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

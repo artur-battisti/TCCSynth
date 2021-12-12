@@ -57,8 +57,6 @@ public:
 
     //==============================================================================
 
-    // Minhas funções no PluginProcessor
-
     void addVoicesToSynth();
     void changeNumVoices(int choice);
 

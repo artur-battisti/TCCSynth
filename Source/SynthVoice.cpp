@@ -30,7 +30,6 @@ void SynthVoice::stopNote(float velocity, bool allowTailOff)
 
 void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue)
 {
-
 }
 
 void SynthVoice::pitchWheelMoved(int newPitchWheelValue)
@@ -49,7 +48,7 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     osc.prepareToPlay(spec);
     gain.prepare(spec);
 
-    estaPronto = true;
+    isOk = true;
 }
 
 void SynthVoice::alterar(const float attack, const float decay, const float sustain, const float release)
@@ -59,7 +58,7 @@ void SynthVoice::alterar(const float attack, const float decay, const float sust
 
 void SynthVoice::renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int startSample, int numSamples)
 {
-    jassert (estaPronto);
+    jassert (isOk);
 
     if (! isVoiceActive())
         return;
@@ -81,8 +80,6 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer< float >& outputBuffer, int s
     for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
     {
         outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
-
-        
     }
 }
 

@@ -20,6 +20,7 @@
 class TCCSynthAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
+
     TCCSynthAudioProcessorEditor (TCCSynthAudioProcessor&);
     ~TCCSynthAudioProcessorEditor() override;
 

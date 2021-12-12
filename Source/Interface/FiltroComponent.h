@@ -14,11 +14,10 @@
 #include "AuxiliarComponent.h"
 
 //==============================================================================
-/*
-*/
 class FiltroComponent  : public AuxiliarComponent
 {
 public:
+
     FiltroComponent(juce::AudioProcessorValueTreeState& apvts);
     ~FiltroComponent() override;
 

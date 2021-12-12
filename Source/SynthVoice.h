@@ -37,14 +37,6 @@ private:
     juce::AudioBuffer<float> synthBuffer;
     
     OscDados osc;
-    //juce::dsp::Oscillator<float> osc{ [](float x) {return x / juce::MathConstants<float>::pi; } };
     GainDados gain;
-    bool estaPronto{ false };
-    
-
-    // return std::sin(x);                             Sine
-    // return x / juce::MathConstants<float>::pi;      Saw
-    // return x < 0.0f ? -1.0f : 1.0f;                 Square
-    // return x * 4.0f - 4.0f;                         Triangle
-
+    bool isOk{ false };
 };

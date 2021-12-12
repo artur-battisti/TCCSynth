@@ -17,26 +17,28 @@ FiltroComponent::FiltroComponent(juce::AudioProcessorValueTreeState& apvts)
 
     // HIGH-PASS
     freqHPAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERHIGHPASSFREQ", freqHPSlider);
+    freqHPSlider.setTextValueSuffix(" Hz");
     setRotarySliderParams(freqHPSlider);
-    setLabel(freqHPLabel);
+    setMiniLabel(freqHPLabel);
     setLabel(highPassLabel);
 
     resHPAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERRESHP", resHPSlider);
     setRotarySliderParams(resHPSlider);
-    setLabel(resHPLabel);
+    setMiniLabel(resHPLabel);
     
 
     /*----------------------------------------------------------------------------------------------------------------------------*/
 
     // LOW-PASS
-    setLabel(lowPassLabel);
     freqLPAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERLOWPASSFREQ", freqLPSlider);
+    freqLPSlider.setTextValueSuffix(" Hz");
     setRotarySliderParams(freqLPSlider);
-    setLabel(freqLPLabel);
+    setMiniLabel(freqLPLabel);
+    setLabel(lowPassLabel);
 
     resLPAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "FILTERRESLP", resLPSlider);
     setRotarySliderParams(resLPSlider);
-    setLabel(resLPLabel);
+    setMiniLabel(resLPLabel);
 
 }
 
@@ -48,7 +50,6 @@ void FiltroComponent::paint (juce::Graphics& g)
 {
     
     g.fillAll(juce::Colour::fromRGB(123, 104, 238));
-    //g.drawRect(getLocalBounds(),5);
 }
 
 void FiltroComponent::resized()

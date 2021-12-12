@@ -14,11 +14,10 @@
 #include "AuxiliarComponent.h"
 
 //==============================================================================
-/*
-*/
 class GainComponent  : public AuxiliarComponent
 {
 public:
+
     GainComponent(juce::AudioProcessorValueTreeState& apvts);
     ~GainComponent() override;
 

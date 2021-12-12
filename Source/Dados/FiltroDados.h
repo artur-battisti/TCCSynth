@@ -19,12 +19,11 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int numChannels);
     void process(juce::AudioBuffer<float>& buffer);
     void alterarParametros(const float freq, const float ressonancia, const float freqLP, const float ressonanciaLP);
-    void reset();
 
 private:
 
     juce::dsp::StateVariableTPTFilter<float> filtroHP;
     juce::dsp::StateVariableTPTFilter<float> filtroLP;
-    bool estaPreparado = false;
+    bool isOk = false;
 
 };

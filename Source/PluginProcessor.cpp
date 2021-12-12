@@ -152,34 +152,16 @@ bool TCCSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 
 void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-   
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
 
     for (int i = 0; i < synth.getNumVoices(); i++)
     {
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))) {
-            // OSC control
-            // ADSR
-            // LFO
             
             auto& osc1WaveType = *apvts.getRawParameterValue("OSC1WAVETYPE");
 
@@ -195,10 +177,7 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             voice->getOscillator().setWaveType(osc1WaveType);
             voice->alterar(attack.load(), decay.load(), sustain.load(), release.load());
             voice->getGain().setGainLevel(gain);
-            
         }
-
-
     }
 
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
@@ -215,10 +194,7 @@ void TCCSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-        // ..do something to the data...
-        
     }
-
 }
 
 //==============================================================================
@@ -255,21 +231,15 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::createParameters()
 {
-    
-
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
 
     // Oscillator
     parameters.push_back(std::make_unique<juce::AudioParameterChoice>
-        ("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{"Sine","Square", "Saw"}, 1));
+        ("OSC1WAVETYPE", "Osc 1 Wave Type", juce::StringArray{"Sine","Sawtooth", "Square", "Triangle"}, 0));
 
     // Voices
     parameters.push_back(std::make_unique<juce::AudioParameterChoice>
         ("NUMVOICES", "Num Voices", juce::StringArray{ "Monophonic","Poliphonic"}, 1));
-
-    // FM
-    //parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FMFREQ", "FM Frequency", juce::NormalisableRange<float>{ 0.0f, 1000.0f }, 250.0f));
-    //parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FMDEPTH", "FM Depth", juce::NormalisableRange<float>{ 0.0f, 1000.0f }, 100.0f));
 
     // ADSR
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK", "Attack", juce::NormalisableRange<float>{ 0.0f, 1.0f, 0.01f }, 0.01f));
@@ -285,12 +255,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout TCCSynthAudioProcessor::crea
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTERRESLP", "Filter Resonance LP", juce::NormalisableRange<float>{ 1.0f, 10.0f, 0.01f}, 1.0f));
 
     // Gain
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", juce::NormalisableRange<float>{ -96.0f, 0.0f, 0.1f }, 0.0f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN", "Gain", juce::NormalisableRange<float>{ -100.0f, 0.0f, 0.1f }, -18.0f));
 
     return { parameters.begin(), parameters.end() };
 }
-
-// Minhas funções no PluginProcessor
 
 void TCCSynthAudioProcessor::addVoicesToSynth()
 {
@@ -303,7 +271,6 @@ void TCCSynthAudioProcessor::addVoicesToSynth()
 
 void TCCSynthAudioProcessor::changeNumVoices(int choice)
 {
-    synth.clearVoices();
     switch (choice)
     {
     case 0:

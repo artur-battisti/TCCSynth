@@ -14,9 +14,6 @@
 //==============================================================================
 AdsrComponent::AdsrComponent(juce::AudioProcessorValueTreeState& apvts)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
     attackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "ATTACK", attackSlider);
     decayAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "DECAY", decaySlider);
     sustainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "SUSTAIN", sustainSlider);
@@ -31,21 +28,16 @@ AdsrComponent::AdsrComponent(juce::AudioProcessorValueTreeState& apvts)
     setLabel(decayLabel);
     setLabel(sustainLabel);
     setLabel(releaseLabel);
-    
 }
 
 AdsrComponent::~AdsrComponent()
 {
 }
 
-
 void AdsrComponent::paint (juce::Graphics& g)
 {
-
     g.fillAll(juce::Colour::fromRGB(123, 104, 238));
-    //g.drawRect(getLocalBounds());
 }
-
 
 void AdsrComponent::resized()
 {

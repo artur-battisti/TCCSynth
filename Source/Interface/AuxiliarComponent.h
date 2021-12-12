@@ -18,13 +18,12 @@
 class AuxiliarComponent  : public juce::Component
 {
 public:
+
     AuxiliarComponent();
     ~AuxiliarComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
-
-private:
 
 protected:
 
@@ -32,6 +31,7 @@ protected:
     void setRotarySliderParams(juce::Slider& slider);
     void setComboBoxParams(juce::ComboBox& comboBox);
     void setLabel(juce::Label& label);
+    void setMiniLabel(juce::Label& label);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AuxiliarComponent)
 };

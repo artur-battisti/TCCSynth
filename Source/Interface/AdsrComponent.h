@@ -14,18 +14,16 @@
 #include "AuxiliarComponent.h"
 
 //==============================================================================
-/*
-*/
 class AdsrComponent  : public AuxiliarComponent
 {
 public:
+
     AdsrComponent(juce::AudioProcessorValueTreeState& apvts);
     ~AdsrComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
     
-
 private:
 
     juce::Slider attackSlider;

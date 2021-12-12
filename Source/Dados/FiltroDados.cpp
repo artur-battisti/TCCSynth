@@ -23,14 +23,14 @@ void FiltroDados::prepareToPlay(double sampleRate, int samplesPerBlock, int numC
     filtroHP.prepare(spec);
     filtroLP.prepare(spec);
 
-    estaPreparado = true;
+    isOk = true;
 
 }
 
 void FiltroDados::process(juce::AudioBuffer<float>& buffer)
 {
 
-    jassert(estaPreparado);
+    jassert(isOk);
 
     juce::dsp::AudioBlock<float> block{ buffer };
     filtroHP.process(juce::dsp::ProcessContextReplacing<float> {block} );
@@ -47,9 +47,4 @@ void FiltroDados::alterarParametros(const float freqHP, const float ressonanciaH
     filtroLP.setType(juce::dsp::StateVariableTPTFilterType::lowpass);
     filtroLP.setCutoffFrequency(freqLP);
     filtroLP.setResonance(ressonanciaLP);
-}
-
-void FiltroDados::reset()
-{
-    //filtroHP.reset();
 }

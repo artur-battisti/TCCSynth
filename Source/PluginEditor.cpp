@@ -13,7 +13,7 @@
 TCCSynthAudioProcessorEditor::TCCSynthAudioProcessorEditor(TCCSynthAudioProcessor& p)
     : AudioProcessorEditor(&p),
     audioProcessor(p),
-    osc1 (audioProcessor.apvts, "OSC1WAVETYPE", "NUMVOICES"),
+    osc1 (audioProcessor.apvts, "OSC1WAVETYPE"),
     adsr(audioProcessor.apvts),
     filtro(audioProcessor.apvts),
     gain(audioProcessor.apvts)
@@ -38,7 +38,6 @@ TCCSynthAudioProcessorEditor::~TCCSynthAudioProcessorEditor()
 void TCCSynthAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colour::fromRGB(106, 90, 205));
-   
 }
 
 void TCCSynthAudioProcessorEditor::resized()
@@ -52,7 +51,6 @@ void TCCSynthAudioProcessorEditor::resized()
     adsr.setBounds(osc1.getRight()+padding, getHeight() * 1 / 3, getWidth() /3, getHeight() * 6/10 + padding);
     filtro.setBounds(adsr.getRight() + padding, getHeight() * 1 / 3, getWidth() / 3 - padding / 2, getHeight() * 6 / 10 + padding);
     pluginName.setBounds(padding, padding, bounds.getWidth() - padding, 150);
-
 }
 
 void TCCSynthAudioProcessorEditor::setPluginNameStyle(juce::Label& pluginName)

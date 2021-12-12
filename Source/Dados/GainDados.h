@@ -24,5 +24,4 @@ public:
 private:
 
     juce::dsp::Gain<float> gain;
-
 };
